@@ -1,0 +1,15 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.navbar-item {
+  background-color: black;
+  width: 100px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.navbar-item:hover {
+  background-color: whitesmoke;
+  color: black;
+}
