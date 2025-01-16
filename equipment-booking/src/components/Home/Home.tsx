@@ -21,10 +21,10 @@ export default function Home() {
       try {
         const data = await fetchEquipment();
         setEquipment(data); // Save equipment in the state
-        console.log(data);
+        console.log(data); // debug
       } catch (err) {
         setError("Impossibile caricare le attrezzature!"); // Errors handling
-        console.log(err);
+        console.log(err); // debug
       } finally {
         setLoading(false); // Remove loading state
       }
@@ -81,7 +81,7 @@ export default function Home() {
       try {
         await bookEquipment(selectedEquipment.id, duration);
         alert(`Prenotazione confermata per ${selectedEquipment.name}!`);
-        closeBookingModal(); // Chiude il modale
+        closeBookingModal(); // Close the modal
       } catch (error) {
         console.error(error);
         alert("Si è verificato un errore durante la prenotazione.");
@@ -120,7 +120,7 @@ export default function Home() {
         </div>
 
         {/* Modale di prenotazione */}
-        {selectedEquipment && ( // this condition works like an if. if(selectedEqipment){do something}
+        {selectedEquipment && ( // this condition works similar to an if. if(selectedEqipment){do something}
           <div className="modal-overlay">
             <div className="modal-content">
               <h2>
@@ -142,7 +142,7 @@ export default function Home() {
                   Chiudi
                 </button>
                 <button className="modal-confirm-button" onClick={handleBookingConfirm} disabled={!duration || duration <= 0}>
-                  Conferma Prenotazione
+                  Conferma
                 </button>
               </div>
             </div>

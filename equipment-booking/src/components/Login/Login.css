@@ -1,19 +1,13 @@
-.form-container {
+.register-form,
+.login-form {
+  background-color: #000000bc;
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 10px;
+  border: 1px solid #ffffff72;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-}
-.login-form {
-  margin-bottom: 20px;
-}
-
-label {
-  display: block;
-}
-input {
-  display: block;
-}
-button {
-  margin-top: 20px;
+  justify-content: space-evenly;
 }

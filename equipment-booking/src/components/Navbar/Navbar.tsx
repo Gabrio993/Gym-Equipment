@@ -1,17 +1,12 @@
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import "./Navbar.css";
+import useNavbar from "./useNavbar";
 
 export default function Navbar() {
-  const navigate = useNavigate();
-  const token = localStorage.getItem("authToken");
-
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    navigate("/login");
-  };
+  const { token, handleLogout } = useNavbar();
 
   return (
-    <div>
+    <div className="navbar-container">
       <ul className="navbar">
         <Link className="navbar-item" to={"/"}>
           Home

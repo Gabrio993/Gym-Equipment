@@ -48,7 +48,7 @@ export default function Bookings(): JSX.Element {
     <>
       {/* Visualizzazione delle prenotazioni */}
       <h2>Prenotazioni</h2>
-      <div>
+      <div className="booking-wrap">
         {booking.length === 0 ? (
           <p>Non ci sono prenotazioni attive.</p>
         ) : (

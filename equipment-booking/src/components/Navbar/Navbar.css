@@ -1,7 +1,12 @@
+/* Navbar */
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 40px;
 }
 .navbar-item {
   background-color: black;
