@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { authRegister } from "../../services/api";
+import { authRegister } from "../services/api";
 
 const useRegister = () => {
   const [userNameRegister, setUserNameRegister] = useState<string>("");
   const [passwordRegister, setPasswordRegister] = useState<string>("");
   const [message, setMessage] = useState<string>("");
+  const clearMessageAfterDelay = () => {
+    setTimeout(() => setMessage(""), 4000);
+  };
   /**
    * Handles the registration form submission.
    * @param {React.FormEvent} e - The form event.
@@ -30,6 +33,7 @@ const useRegister = () => {
     } finally {
       setUserNameRegister("");
       setPasswordRegister("");
+      clearMessageAfterDelay();
     }
   };
   return {

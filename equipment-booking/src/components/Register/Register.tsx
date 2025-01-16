@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import useRegister from "./useRegister";
+import useRegister from "../../hooks/useRegister";
 
 /**
  * A component that handles user authentication, both login and registration.
@@ -11,38 +11,49 @@ export default function Register() {
 
   return (
     <>
-      <h1>Autenticazione</h1>
-      <div className="form-container">
-        <h2>Registrazione</h2>
-        <form className="register-form" onSubmit={handleRegister}>
-          <label htmlFor="userName">Username</label>
+      <h1 className="text-3xl font-bold text-center text-slate-800 mb-4">Autenticazione</h1>
+      <div className="form-container bg-slate-800 text-white p-6 mb-10 rounded-lg shadow-lg max-w-md mx-auto">
+        <h2 className="text-2xl font-semibold mb-4">Registrazione</h2>
+        <form className="register-form flex flex-col gap-4" onSubmit={handleRegister}>
+          <label htmlFor="userNameRegister" className="text-sm font-medium">
+            Username
+          </label>
           <input
             type="text"
             id="userNameRegister"
             placeholder="Username"
             value={userNameRegister}
             onChange={(e) => setUserNameRegister(e.target.value)}
+            className="p-2 rounded-md bg-slate-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-slate-500"
           />
-          <label htmlFor="password">Password</label>
+
+          <label htmlFor="passwordRegister" className="text-sm font-medium">
+            Password
+          </label>
           <input
             type="password"
             id="passwordRegister"
             placeholder="Password"
             value={passwordRegister}
             onChange={(e) => setPasswordRegister(e.target.value)}
+            className="p-2 rounded-md bg-slate-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-slate-500"
           />
-          <button type="submit">Registrati</button>
-          <p>
+
+          <button type="submit" className="bg-slate-600 hover:bg-slate-500 text-white font-semibold py-2 px-4 rounded-md transition-colors">
+            Registrati
+          </button>
+          <p className="text-sm">
             Hai già un account?{" "}
             <span>
-              <Link className="login" to={"/login"}>
-                Fai Login!
+              <Link className="text-slate-400 hover:text-slate-300 underline" to={"/login"}>
+                Login
               </Link>
             </span>
           </p>
         </form>
+
         {/* Messaggio */}
-        {message && <p>{message}</p>}
+        {message && <p className="mt-4 text-red-500 font-semibold text-center">{message}</p>}
       </div>
     </>
   );

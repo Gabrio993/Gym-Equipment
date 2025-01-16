@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchEquipment, bookEquipment } from "../../services/api"; // API services
 import { Equipment } from "../../types/equipment"; // Interface
+import "./Home.css";
 
 export default function Home() {
   const [equipment, setEquipment] = useState<Equipment[]>([]); // Equipment State
@@ -26,7 +27,9 @@ export default function Home() {
         setError("Impossibile caricare le attrezzature!"); // Errors handling
         console.log(err); // debug
       } finally {
-        setLoading(false); // Remove loading state
+        setTimeout(() => {
+          setLoading(false); // Remove loading state after delay to show spinner animation
+        }, 1000);
       }
     };
     getEquipment();
@@ -92,27 +95,36 @@ export default function Home() {
   };
 
   if (loading) {
-    return <p>Caricamento in corso...</p>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="w-16 h-16 border-4 border-t-4 border-slate-800 border-solid rounded-full animate-spin border-t-transparent duration-500">
+          <span className="absolute inset-0 flex justify-center items-center text-2xl">😀</span>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <p className="text-center font-bold text-4xl">{error}</p>;
   }
 
   return (
     <>
-      <div className="app-container">
-        <h1 className="app-title">Attrezzature disponibili</h1>
-        <div className="equipment-list">
+      <div className="app-container w-full p-4">
+        <h1 className="app-title text-5xl text-slate-800 mb-4 text-center">Gym Equipment</h1>
+        <div className="equipment-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-5">
           {equipment.map((item) => (
-            <div className="equipment-card" key={item.id}>
-              <img className="equipment-image" src={item.image} alt={item.name} />
-              <h3 className="equipment-name">{item.name}</h3>
-              <p className="equipment-claim">{item.claim}</p>
-              <p className="equipment-price">
+            <div className="equipment-card bg-slate-800 text-white p-4 rounded-lg hover:bg-slate-700 transition-colors" key={item.id}>
+              <img className="equipment-image w-full h-48 object-cover rounded-md mb-4" src={item.image} alt={item.name} />
+              <h3 className="equipment-name text-xl font-semibold mb-2">{item.name}</h3>
+              <p className="equipment-claim text-sm mb-2">{item.claim}</p>
+              <p className="equipment-price text-lg">
                 Prezzo: <strong>{item.pricePerMinute} €/min</strong>
               </p>
-              <button className="equipment-rent-button" onClick={() => handleRentClick(item)}>
+              <button
+                className="equipment-rent-button bg-slate-300 text-slate-800 hover:bg-slate-400 w-full py-2 rounded-lg mt-4 transition-colors"
+                onClick={() => handleRentClick(item)}
+              >
                 Noleggia
               </button>
             </div>
@@ -121,27 +133,41 @@ export default function Home() {
 
         {/* Modale di prenotazione */}
         {selectedEquipment && ( // this condition works similar to an if. if(selectedEqipment){do something}
-          <div className="modal-overlay">
-            <div className="modal-content">
-              <h2>
+          <div className="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
+            <div className="modal-content bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+              <h2 className="text-2xl font-semibold mb-4">
                 Prenotazione - {selectedEquipment.name}
-                <div className="icon" dangerouslySetInnerHTML={{ __html: selectedEquipment.icon }}></div>
+                <div className="flex justify-center" dangerouslySetInnerHTML={{ __html: selectedEquipment.icon }}></div>
               </h2>
-              <p>
+              <p className="text-lg mb-4">
                 Prezzo per minuto: <strong>{selectedEquipment.pricePerMinute} €</strong>
               </p>
-              <label>
+              <label className="block mb-4">
                 Durata (minuti):
-                <input type="number" min="0" max="20" value={duration} onChange={handleDurationChange} />
+                <input
+                  type="number"
+                  min="0"
+                  max="20"
+                  value={duration}
+                  onChange={handleDurationChange}
+                  className="mt-1 p-2 border border-slate-300 rounded-lg w-full"
+                />
               </label>
-              <p>
+              <p className="text-lg mb-4">
                 Prezzo totale stimato: <strong>{calculatedPrice.toFixed(2)} €</strong>
               </p>
-              <div className="modal-actions">
-                <button className="modal-close-button" onClick={closeBookingModal}>
+              <div className="modal-actions flex justify-center gap-4">
+                <button
+                  className="modal-close-button bg-slate-300 text-slate-800 hover:bg-slate-400 py-2 px-4 rounded-lg transition-colors"
+                  onClick={closeBookingModal}
+                >
                   Chiudi
                 </button>
-                <button className="modal-confirm-button" onClick={handleBookingConfirm} disabled={!duration || duration <= 0}>
+                <button
+                  className="modal-confirm-button bg-blue-500 text-white hover:bg-blue-600 py-2 px-4 rounded-lg transition-colors"
+                  onClick={handleBookingConfirm}
+                  disabled={!duration || duration <= 0}
+                >
                   Conferma
                 </button>
               </div>
