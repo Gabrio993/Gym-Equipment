@@ -1,98 +1,33 @@
-import { useEffect, useState } from "react";
-import { fetchEquipment, bookEquipment } from "../../services/api"; // API services
-import { Equipment } from "../../types/equipment"; // Interface
+import useHome from "../../hooks/useHome";
 import "./Home.css";
 
-export default function Home() {
-  const [equipment, setEquipment] = useState<Equipment[]>([]); // Equipment State
-  const [loading, setLoading] = useState<boolean>(true); // Loading State
-  const [error, setError] = useState<string | null>(null); // Errors state
-
-  const [selectedEquipment, setSelectedEquipment] = useState<Equipment | null>(null); // Selected Equipment for booking
-  const [duration, setDuration] = useState<number>(0); // Duration in minutes
-  const [calculatedPrice, setCalculatedPrice] = useState<number>(0); // Calculated Price
-
-  useEffect(() => {
-    /**
-     * Fetches all the equipment from the API and save them in the state.
-     * If the API does not return a 200 response, it will set an error.
-     * In any case, it will remove the loading state at the end.
-     */
-    const getEquipment = async () => {
-      try {
-        const data = await fetchEquipment();
-        setEquipment(data); // Save equipment in the state
-        console.log(data); // debug
-      } catch (err) {
-        setError("Impossibile caricare le attrezzature!"); // Errors handling
-        console.log(err); // debug
-      } finally {
-        setTimeout(() => {
-          setLoading(false); // Remove loading state after delay to show spinner animation
-        }, 1000);
-      }
-    };
-    getEquipment();
-  }, []);
-
-  /**
-   * Handles the input change event for the duration input field.
-   * Updates the duration state and the calculated price state.
-   * If the selectedEquipment is not null, it will calculate the new price.
-   * @param {React.ChangeEvent<HTMLInputElement>} event input change event
-   */
-  const handleDurationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value === "" ? 0 : parseInt(event.target.value, 10); // Value handling
-    setDuration(value); // Update The state
-    console.log("Duration immesso:", value); // debug
-    if (selectedEquipment) {
-      setCalculatedPrice(value * selectedEquipment.pricePerMinute);
-    }
-  };
-
-  /**
-   * Handles the click event for renting equipment.
-   * Sets the selected equipment and resets the duration and calculated price to zero.
-   * @param {Equipment} item - The equipment item that is selected for booking.
-   */
-
-  const handleRentClick = (item: Equipment) => {
-    setSelectedEquipment(item);
-    setDuration(0);
-    setCalculatedPrice(0);
-  };
-
-  /**
-   * Closes the booking modal by clearing the selected equipment.
-   */
-
-  const closeBookingModal = () => {
-    setSelectedEquipment(null);
-  };
-
-  /**
-   * Confirms the booking for the selected equipment if a valid duration is set.
-   * Attempts to book the equipment and provides user feedback via alerts.
-   * Closes the booking modal upon successful booking.
-   * Alerts the user if booking fails or if duration is invalid.
-   * @async
-   * @throws Will alert the user if an error occurs during booking.
-   */
-
-  const handleBookingConfirm = async () => {
-    if (selectedEquipment && duration > 0) {
-      try {
-        await bookEquipment(selectedEquipment.id, duration);
-        alert(`Prenotazione confermata per ${selectedEquipment.name}!`);
-        closeBookingModal(); // Close the modal
-      } catch (error) {
-        console.error(error);
-        alert("Si è verificato un errore durante la prenotazione.");
-      }
-    } else {
-      alert("Inserisci una durata valida per completare la prenotazione.");
-    }
-  };
+/**
+ * Renders the Home component for the gym equipment booking application.
+ * It manages the state of equipment, selected equipment, booking duration,
+ * calculated price, loading, and error states. It also handles interactions
+ * for renting equipment, confirming bookings, and displaying notifications.
+ *
+ * The component utilizes the useHome hook for state management and provides
+ * UI for loading status, error display, equipment listing, booking modal,
+ * and notifications.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered component.
+ */
+export default function Home(): JSX.Element {
+  const {
+    equipment,
+    selectedEquipment,
+    duration,
+    loading,
+    error,
+    calculatedPrice,
+    notification,
+    handleDurationChange,
+    handleRentClick,
+    handleBookingConfirm,
+    closeBookingModal,
+  } = useHome();
 
   if (loading) {
     return (
@@ -105,17 +40,17 @@ export default function Home() {
   }
 
   if (error) {
-    return <p className="text-center font-bold text-4xl">{error}</p>;
+    return <p className="text-center font-semibold text-3xl mb-96">{error}</p>;
   }
 
   return (
     <>
       <div className="app-container w-full p-4">
-        <h1 className="app-title text-5xl text-slate-800 mb-4 text-center">Gym Equipment</h1>
+        <h1 className="app-title text-3xl font-semibold text-slate-800 mb-4 text-center">Gym Equipment</h1>
         <div className="equipment-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-5">
           {equipment.map((item) => (
             <div className="equipment-card bg-slate-800 text-white p-4 rounded-lg hover:bg-slate-700 transition-colors" key={item.id}>
-              <img className="equipment-image w-full h-48 object-cover rounded-md mb-4" src={item.image} alt={item.name} />
+              <img className="equipment-image w-full h-44 object-cover rounded-md mb-4" src={item.image} alt={item.name} />
               <h3 className="equipment-name text-xl font-semibold mb-2">{item.name}</h3>
               <p className="equipment-claim text-sm mb-2">{item.claim}</p>
               <p className="equipment-price text-lg">
@@ -131,9 +66,9 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Modale di prenotazione */}
+        {/* Booking Modal */}
         {selectedEquipment && ( // this condition works similar to an if. if(selectedEqipment){do something}
-          <div className="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
+          <div className="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10 p-6">
             <div className="modal-content bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
               <h2 className="text-2xl font-semibold mb-4">
                 Prenotazione - {selectedEquipment.name}
@@ -145,8 +80,9 @@ export default function Home() {
               <label className="block mb-4">
                 Durata (minuti):
                 <input
+                  placeholder="inserisci"
                   type="number"
-                  min="0"
+                  min="1"
                   max="20"
                   value={duration}
                   onChange={handleDurationChange}
@@ -172,6 +108,16 @@ export default function Home() {
                 </button>
               </div>
             </div>
+          </div>
+        )}
+        {/* Notifications */}
+        {notification && (
+          <div
+            className={`notification fixed bottom-4 right-4 p-4 rounded-lg shadow-lg text-white ${
+              notification.type === "success" ? "bg-green-500" : "bg-red-500"
+            }`}
+          >
+            {notification.message}
           </div>
         )}
       </div>

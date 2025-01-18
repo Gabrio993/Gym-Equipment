@@ -1,5 +1,11 @@
-.form-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/*
+ * Author: Gabriele Fusco
+ * Date: 18/01/2025
+ * Content: Login styles component
+ */
+@media (max-width: 508px) {
+  .form-container {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
 }

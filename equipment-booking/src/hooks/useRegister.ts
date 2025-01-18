@@ -1,13 +1,32 @@
 import { useState } from "react";
 import { authRegister } from "../services/api";
+import { UseRegisterReturn } from "../types/register";
 
-const useRegister = () => {
+/**
+ * Handles user registration.
+ *
+ * This hook provides state and functionality for handling user registration
+ * operations, including setting and clearing registration credentials,
+ * managing registration messages, and navigating upon successful registration.
+ *
+ * @returns {UseRegisterReturn}
+ */
+const useRegister = (): UseRegisterReturn => {
   const [userNameRegister, setUserNameRegister] = useState<string>("");
   const [passwordRegister, setPasswordRegister] = useState<string>("");
   const [message, setMessage] = useState<string>("");
+  const [messageType, setMessageType] = useState<"success" | "error" | "">("");
+
+  /**
+   * Clears the message after a delay of 3 seconds.
+   */
   const clearMessageAfterDelay = () => {
-    setTimeout(() => setMessage(""), 4000);
+    setTimeout(() => {
+      setMessage("");
+      setMessageType("");
+    }, 3000);
   };
+
   /**
    * Handles the registration form submission.
    * @param {React.FormEvent} e - The form event.
@@ -20,16 +39,41 @@ const useRegister = () => {
    *
    * If the registration fails, sets the `message` state to an error message.
    */
-
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // get existing userName from localStorage
+    const existingUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
+    if (existingUsers.includes(userNameRegister)) {
+      setMessage("Username è già in uso. Scegli un altro username.");
+      setMessageType("error");
+      clearMessageAfterDelay();
+      return;
+    }
+
+    // Check empty fields
+    if (!userNameRegister.trim() || !passwordRegister.trim()) {
+      setMessage("Inserisci username e password.");
+      setMessageType("error");
+      clearMessageAfterDelay();
+      return;
+    }
+    // Check if username contains at least one letter
+    if (!/[a-zA-Z]/.test(userNameRegister)) {
+      setMessage("Lo username deve contenere almeno una lettera.");
+      setMessageType("error");
+      clearMessageAfterDelay();
+      return;
+    }
     try {
       const response = await authRegister(userNameRegister, passwordRegister);
-      console.log(response); // debug
       setMessage(`Registrazione riuscita: ${response}, ora puoi effettuare il login`);
-    } catch (error) {
-      setMessage("Errore nella registrazione.");
-      console.log(error); // debug
+      setMessageType("success");
+      //  save Username in localStorage (bad practice)
+      localStorage.setItem("registeredUsers", JSON.stringify([...existingUsers, userNameRegister]));
+    } catch {
+      setMessage(`Errore nella registrazione`);
+      setMessageType("error");
     } finally {
       setUserNameRegister("");
       setPasswordRegister("");
@@ -39,6 +83,7 @@ const useRegister = () => {
   return {
     handleRegister,
     message,
+    messageType,
     userNameRegister,
     passwordRegister,
     setUserNameRegister,

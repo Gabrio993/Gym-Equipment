@@ -1,0 +1,14 @@
+/*
+ * Author: Gabriele Fusco
+ * Date: 18/01/2025
+ * Content: Booking styles component
+ */
+.booking-container {
+  margin-bottom: 250px;
+}
+@media (max-width: 800px) {
+  .booking-container {
+    margin-right: 30px;
+    margin-left: 30px;
+  }
+}

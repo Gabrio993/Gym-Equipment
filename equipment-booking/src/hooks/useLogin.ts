@@ -2,15 +2,33 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { LoginResponse } from "../types/auth";
 import { authLogin } from "../services/api";
+import { UseLoginReturn } from "../types/login";
 
-const useLogin = () => {
+/**
+ * Custom hook for managing user login.
+ *
+ * This hook provides state and functionality for handling user login
+ * operations, including setting and clearing login credentials, managing
+ * login messages, and navigating upon successful login.
+ *
+ * @returns {UseLoginReturn}
+ */
+const useLogin = (): UseLoginReturn => {
   const [userNameLogin, setUserNameLogin] = useState<string>("");
   const [passwordLogin, setPasswordLogin] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const navigate = useNavigate();
 
+  /**
+   * Clears the message after a delay of 3 seconds.
+   *
+   * The purpose of this function is to remove any error message or
+   * success message after a certain delay, so that the user is not
+   * distracted by the message when they are trying to interact with
+   * the component.
+   */
   const clearMessageAfterDelay = () => {
-    setTimeout(() => setMessage(""), 4000);
+    setTimeout(() => setMessage(""), 3000);
   };
 
   /**
@@ -27,7 +45,7 @@ const useLogin = () => {
    */
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Controllo dei campi vuoti
+    // Check empty fields
     if (!userNameLogin.trim() || !passwordLogin.trim()) {
       setMessage("Inserisci username e password.");
       clearMessageAfterDelay();
@@ -39,7 +57,7 @@ const useLogin = () => {
       localStorage.setItem("authToken", response.token);
       navigate("/");
     } catch (error) {
-      setMessage("Errore durante il login.");
+      setMessage("Errore durante il login");
       console.log(error);
     } finally {
       setUserNameLogin("");

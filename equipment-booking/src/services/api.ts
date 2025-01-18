@@ -62,11 +62,10 @@ export const bookEquipment = async (equipmentId: number, duration: number): Prom
  * Sends a registration request to the API.
  * @param {string} username - The username to be registered.
  * @param {string} password - The password for the new user.
- * @returns {Promise<Response>} A promise that resolves with the response from the API.
+ * @returns {Promise<string>} A promise that resolves with the response from the API.
  */
-export const authRegister = async (username: string, password: string) => {
+export const authRegister = async (username: string, password: string): Promise<string> => {
   const response = await fetch(`${API_BASE_URL}/register`, {
-    // aggiungere /api dopo base_url quando il server tornera attivo
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -89,7 +88,6 @@ export const authRegister = async (username: string, password: string) => {
  */
 export const authLogin = async (username: string, password: string): Promise<LoginResponse> => {
   const response = await fetch(`${API_BASE_URL}/login`, {
-    // aggiungere /api dopo base_url quando il server tornera attivo
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -6,14 +6,16 @@ import "./Login.css";
  * A component that handles user authentication, both login and registration.
  * It exposes two forms, one for login and one for registration, and displays
  * a message according to the outcome of the operations.
+ *
+ * @returns {JSX.Element}
  */
-export default function Login() {
+export default function Login(): JSX.Element {
   const { handleLogin, userNameLogin, setUserNameLogin, passwordLogin, setPasswordLogin, message } = useLogin();
 
   return (
     <>
-      <h1 className="text-3xl font-bold text-center text-slate-800 mb-4">Autenticazione</h1>
-      <div className="form-container bg-slate-800 text-white p-6 mb-10 rounded-lg shadow-lg max-w-md mx-auto my-auto">
+      <h2 className="text-3xl text-center text-slate-800 mb-4">Autenticazione</h2>
+      <div className="form-container bg-slate-800 text-white p-6  mb-10 rounded-lg shadow-lg max-w-md mx-auto my-auto">
         {/* Login */}
         <h2 className="text-2xl font-semibold mb-4">Login</h2>
         <form className="login-form flex flex-col gap-4" onSubmit={handleLogin}>

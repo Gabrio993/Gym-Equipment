@@ -1,28 +1,17 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router";
-import "./App.css";
-import Bookings from "./components/Bookings/Bookings";
-import Home from "./components/Home/Home";
-import Login from "./components/Login/Login";
-import Navbar from "./components/Navbar/Navbar";
-import Register from "./components/Register/Register";
-import Footer from "./components/Footer/Footer";
+import { BrowserRouter } from "react-router";
+import AppContent from "./App/AppContent";
 
+/**
+ * The top-level component of the app. It renders an instance of BrowserRouter
+ * from react-router-dom, which is necessary for client-side routing to work.
+ * The BrowserRouter component contains an instance of AppContent, which
+ * determines which routes are displayed and conditionally renders the Navbar and
+ * Footer components.
+ */
 function App() {
   return (
     <BrowserRouter>
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/bookings" element={<Bookings />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="*" element={<Navigate to={"/"} />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      <AppContent />
     </BrowserRouter>
   );
 }
