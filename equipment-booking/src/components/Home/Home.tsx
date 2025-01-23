@@ -33,7 +33,9 @@ export default function Home(): JSX.Element {
     return (
       <div className="flex justify-center items-center h-screen">
         <div className="w-16 h-16 border-4 border-t-4 border-slate-800 border-solid rounded-full animate-spin border-t-transparent duration-500">
-          <span className="absolute inset-0 flex justify-center items-center text-2xl">😀</span>
+          <span className="absolute inset-0 flex justify-center items-center text-2xl">
+            <img src="../../../public/assets/img/gym-dumbbell-svgrepo-com.svg" alt="dumbell-img" />
+          </span>
         </div>
       </div>
     );
@@ -75,12 +77,11 @@ export default function Home(): JSX.Element {
                 <div className="flex justify-center" dangerouslySetInnerHTML={{ __html: selectedEquipment.icon }}></div>
               </h2>
               <p className="text-lg mb-4">
-                Prezzo per minuto: <strong>{selectedEquipment.pricePerMinute} €</strong>
+                Prezzo per minuto: <strong>{selectedEquipment.pricePerMinute.toFixed(2)} €</strong>
               </p>
               <label className="block mb-4">
                 Durata (minuti):
                 <input
-                  placeholder="inserisci"
                   type="number"
                   min="1"
                   max="20"

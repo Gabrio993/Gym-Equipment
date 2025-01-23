@@ -42,15 +42,6 @@ const useRegister = (): UseRegisterReturn => {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // get existing userName from localStorage
-    const existingUsers = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
-    if (existingUsers.includes(userNameRegister)) {
-      setMessage("Username è già in uso. Scegli un altro username.");
-      setMessageType("error");
-      clearMessageAfterDelay();
-      return;
-    }
-
     // Check empty fields
     if (!userNameRegister.trim() || !passwordRegister.trim()) {
       setMessage("Inserisci username e password.");
@@ -70,7 +61,7 @@ const useRegister = (): UseRegisterReturn => {
       setMessage(`Registrazione riuscita: ${response}, ora puoi effettuare il login`);
       setMessageType("success");
       //  save Username in localStorage (bad practice)
-      localStorage.setItem("registeredUsers", JSON.stringify([...existingUsers, userNameRegister]));
+      localStorage.setItem("registeredUser", JSON.stringify(userNameRegister));
     } catch {
       setMessage(`Errore nella registrazione`);
       setMessageType("error");

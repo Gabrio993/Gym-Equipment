@@ -22,7 +22,7 @@ const useHome = (): UseHomeReturn => {
   const [error, setError] = useState<string | null>(null); // Errors state
 
   const [selectedEquipment, setSelectedEquipment] = useState<Equipment | null>(null); // Selected Equipment for booking
-  const [duration, setDuration] = useState<number>(0); // Duration in minutes
+  const [duration, setDuration] = useState<number>(1); // Duration in minutes
   const [calculatedPrice, setCalculatedPrice] = useState<number>(0); // Calculated Price
 
   const [notification, setNotification] = useState<{ message: string; type: "success" | "error" } | null>(null);
