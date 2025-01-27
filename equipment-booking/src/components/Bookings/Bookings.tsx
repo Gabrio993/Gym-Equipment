@@ -1,4 +1,5 @@
 import useBookings from "../../hooks/useBookings";
+import useHome from "../../hooks/useHome";
 import "./Booking.css";
 
 /**
@@ -9,7 +10,15 @@ import "./Booking.css";
  * @returns {JSX.Element}
  */
 export default function Bookings(): JSX.Element {
-  const { booking, loadBooking, errorBooking } = useBookings();
+  const { booking: bookingList, loadBooking, errorBooking } = useBookings();
+
+  const { equipment } = useHome();
+
+  const booking = bookingList.map((el) => {
+    const equipmentId = el.equipment_id;
+    const equipmentItem = equipment.find((e) => e.id === equipmentId);
+    return { ...el, equipment: equipmentItem };
+  });
 
   if (loadBooking) {
     return (
@@ -36,8 +45,12 @@ export default function Bookings(): JSX.Element {
             {booking.map((b) => (
               <li key={b.id} className="border-b border-slate-700 pb-4">
                 <p className="text-sm flex flex-wrap justify-between gap-2">
-                  <span className="font-semibold  ">ID attrezzo:</span>
+                  <span className="font-semibold  ">Attrezzo:</span>
                   <span className="sm:ml-2">{b.equipment_id}</span>
+                </p>
+                <p className="text-sm flex flex-wrap justify-between gap-2">
+                  <span className="font-semibold">Nome:</span>
+                  <span className="sm:ml-2">{b.equipment?.name}</span>
                 </p>
                 <p className="text-sm flex flex-wrap justify-between gap-2">
                   <span className="font-semibold  ">Inizio:</span>

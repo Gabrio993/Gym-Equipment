@@ -14,6 +14,7 @@ import { UseRegisterReturn } from "../types/register";
 const useRegister = (): UseRegisterReturn => {
   const [userNameRegister, setUserNameRegister] = useState<string>("");
   const [passwordRegister, setPasswordRegister] = useState<string>("");
+  const [confirmPasswordRegister, setConfirmPasswordRegister] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [messageType, setMessageType] = useState<"success" | "error" | "">("");
 
@@ -56,18 +57,27 @@ const useRegister = (): UseRegisterReturn => {
       clearMessageAfterDelay();
       return;
     }
+    // check between the two password
+    if (confirmPasswordRegister !== passwordRegister) {
+      setMessage("Le password sembrano essere diverse!");
+      setMessageType("error");
+      clearMessageAfterDelay();
+      return;
+    } else {
+      setConfirmPasswordRegister(passwordRegister);
+    }
+
     try {
       const response = await authRegister(userNameRegister, passwordRegister);
       setMessage(`Registrazione riuscita: ${response}, ora puoi effettuare il login`);
       setMessageType("success");
-      //  save Username in localStorage (bad practice)
-      localStorage.setItem("registeredUser", JSON.stringify(userNameRegister));
     } catch {
       setMessage(`Errore nella registrazione`);
       setMessageType("error");
     } finally {
       setUserNameRegister("");
       setPasswordRegister("");
+      setConfirmPasswordRegister("");
       clearMessageAfterDelay();
     }
   };
@@ -79,6 +89,8 @@ const useRegister = (): UseRegisterReturn => {
     passwordRegister,
     setUserNameRegister,
     setPasswordRegister,
+    confirmPasswordRegister,
+    setConfirmPasswordRegister,
   };
 };
 

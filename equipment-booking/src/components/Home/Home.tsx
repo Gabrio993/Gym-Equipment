@@ -2,6 +2,7 @@ import useHome from "../../hooks/useHome";
 import "./Home.css";
 
 /**
+ * @component
  * Renders the Home component for the gym equipment booking application.
  * It manages the state of equipment, selected equipment, booking duration,
  * calculated price, loading, and error states. It also handles interactions
@@ -11,8 +12,7 @@ import "./Home.css";
  * UI for loading status, error display, equipment listing, booking modal,
  * and notifications.
  *
- * @component
- * @returns {JSX.Element} The rendered component.
+ * @returns {JSX.Element} The rendered Home component.
  */
 export default function Home(): JSX.Element {
   const {

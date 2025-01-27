@@ -3,11 +3,12 @@ import useNavbar from "../../hooks/useNavbar";
 import "./Navbar.css";
 
 /**
+ * @component
  * Renders the Navbar component which includes navigation links and authentication control.
  * It shows links for "Home" and "Bookings". If the user is not authenticated, a "Login" link
  * is displayed; if authenticated, a "Logout" button is provided.
  *
- * @returns {JSX.Element}
+ * @returns {JSX.Element} The navbar element
  */
 export default function Navbar(): JSX.Element {
   const { token, handleLogout } = useNavbar();

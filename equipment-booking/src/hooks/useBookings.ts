@@ -15,7 +15,6 @@ import { useBookingsReturn } from "../types/booking";
  * - loadBooking: A boolean indicating the loading status.
  * - errorBooking: A string or null representing any error messages.
  */
-
 const useBookings = (): useBookingsReturn => {
   const [booking, setBooking] = useState<EquipmentBooking[]>([]); // bookingState
   const [loadBooking, setLoadBooking] = useState<boolean>(true); // Loading StateBooking

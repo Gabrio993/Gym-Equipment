@@ -1,9 +1,8 @@
 import "./Footer.css";
 /**
+ * @component
  * Footer component of the application
- *
  * This component renders the footer of the application containing the logo, contact information, opening hours, and social media links.
- *
  * @returns {JSX.Element} The footer component
  */
 export default function Footer(): JSX.Element {

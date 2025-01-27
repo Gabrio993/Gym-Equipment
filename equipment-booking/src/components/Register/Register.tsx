@@ -2,12 +2,24 @@ import { Link } from "react-router";
 import useRegister from "../../hooks/useRegister";
 
 /**
- * A component that handles user authentication, both login and registration.
- * It exposes two forms, one for login and one for registration, and displays
- * a message according to the outcome of the operations.
+ * @component
+ * A component that handles user authentication registration.
+ * It displays a message according to the outcome of the operations.
+ *
+ * @returns {JSX.Element} The register element
  */
-export default function Register() {
-  const { handleRegister, userNameRegister, setUserNameRegister, passwordRegister, setPasswordRegister, message, messageType } = useRegister();
+export default function Register(): JSX.Element {
+  const {
+    handleRegister,
+    userNameRegister,
+    setUserNameRegister,
+    passwordRegister,
+    setPasswordRegister,
+    message,
+    messageType,
+    confirmPasswordRegister,
+    setConfirmPasswordRegister,
+  } = useRegister();
 
   return (
     <>
@@ -40,6 +52,19 @@ export default function Register() {
             placeholder="Password"
             value={passwordRegister}
             onChange={(e) => setPasswordRegister(e.target.value)}
+            className="p-2 rounded-md bg-slate-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-slate-500"
+          />
+          <label htmlFor="confirmPasswordRegister" className="text-sm font-medium">
+            Password
+          </label>
+          <input
+            type="password"
+            id="confirmPasswordRegister"
+            minLength={6}
+            maxLength={20}
+            placeholder="Conferma Password"
+            value={confirmPasswordRegister}
+            onChange={(e) => setConfirmPasswordRegister(e.target.value)}
             className="p-2 rounded-md bg-slate-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-slate-500"
           />
 

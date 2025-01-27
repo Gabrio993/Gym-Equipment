@@ -1,10 +1,18 @@
 import { motion } from "framer-motion"; // Importa motion per le animazioni
 import { useNavigate } from "react-router";
 
-const NotFound = () => {
+/**
+ * @component
+ * A 404 page with animations and a button to go back to the homepage
+ * @returns {JSX.Element} The 404 page
+ */
+
+const NotFound = (): JSX.Element => {
   const navigate = useNavigate();
 
-  // Funzione per il reindirizzamento alla home
+  /**
+   * Navigates to the home page when called
+   */
   const goHome = () => {
     navigate("/");
   };

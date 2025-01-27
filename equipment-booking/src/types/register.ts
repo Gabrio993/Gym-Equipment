@@ -6,4 +6,6 @@ export interface UseRegisterReturn {
   passwordRegister: string;
   setUserNameRegister: React.Dispatch<React.SetStateAction<string>>;
   setPasswordRegister: React.Dispatch<React.SetStateAction<string>>;
+  confirmPasswordRegister: string;
+  setConfirmPasswordRegister: React.Dispatch<React.SetStateAction<string>>;
 }

@@ -3,11 +3,11 @@ import useLogin from "../../hooks/useLogin";
 import "./Login.css";
 
 /**
- * A component that handles user authentication, both login and registration.
- * It exposes two forms, one for login and one for registration, and displays
- * a message according to the outcome of the operations.
+ * @component
+ * A component that handles user authentication login.
+ * It displays a message according to the outcome of the operations.
  *
- * @returns {JSX.Element}
+ * @returns {JSX.Element} The login element
  */
 export default function Login(): JSX.Element {
   const { handleLogin, userNameLogin, setUserNameLogin, passwordLogin, setPasswordLogin, message } = useLogin();

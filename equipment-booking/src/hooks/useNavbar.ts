@@ -12,7 +12,6 @@ import { UseNavbarReturn } from "../types/navbar";
  * - `token`: (string | null) The authentication token from local storage.
  * - `handleLogout`: (Function) A function to remove the auth token and navigate to the login page.
  */
-
 const useNavbar = (): UseNavbarReturn => {
   const navigate = useNavigate();
   const token: string | null = localStorage.getItem("authToken");
