@@ -3,15 +3,17 @@ import useHome from "../../hooks/useHome";
 import "./Booking.css";
 
 /**
- * Fetches all the bookings from the API and shows them in a list.
- * If the API does not return a 200 response, it will show an error.
- * If there are no active bookings, it will show a message.
- * The loading state is shown while the data is being fetched.
- * @returns {JSX.Element}
+ * @component
+ * Displays a list of active equipment bookings. Integrates data from the
+ * useBookings and useHome hooks to fetch and map booking details with
+ * corresponding equipment information. Handles the loading and error states
+ * during the data fetching process.
+ *
+ * @returns {JSX.Element} A rendered component that shows a loading
+ * spinner, an error message, or the list of active bookings with equipment details.
  */
 export default function Bookings(): JSX.Element {
   const { booking: bookingList, loadBooking, errorBooking } = useBookings();
-
   const { equipment } = useHome();
 
   const booking = bookingList.map((el) => {

@@ -56,10 +56,9 @@ const useHome = (): UseHomeReturn => {
    */
   const handleDurationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value === "" ? 0 : parseInt(event.target.value, 10); // Value handling
-    setDuration(value); // Update The state
-    console.log("Duration immesso:", value); // debug
+    setDuration(value); // Update The Duration state
     if (selectedEquipment) {
-      setCalculatedPrice(value * selectedEquipment.pricePerMinute);
+      setCalculatedPrice(value * selectedEquipment.pricePerMinute); // Update the calculated price state
     }
   };
 

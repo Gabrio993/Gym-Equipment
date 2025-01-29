@@ -35,7 +35,7 @@ const useBookings = (): useBookingsReturn => {
         setBooking(activeBookings);
       } catch (err) {
         setErrorBooking("Errore nel caricamento delle prenotazioni!");
-        console.log(err);
+        console.error(err);
       } finally {
         setLoadBooking(false);
       }
