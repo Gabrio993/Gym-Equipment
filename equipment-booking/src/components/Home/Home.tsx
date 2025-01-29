@@ -34,7 +34,7 @@ export default function Home(): JSX.Element {
       <div className="flex justify-center items-center h-screen">
         <div className="w-16 h-16 border-4 border-t-4 border-slate-800 border-solid rounded-full animate-spin border-t-transparent duration-500">
           <span className="absolute inset-0 flex justify-center items-center text-2xl">
-            <img src="../../../public/assets/img/gym-dumbbell-svgrepo-com.svg" alt="dumbell-img" />
+            <img src="/assets/img/gym-dumbbell-svgrepo-com.svg" alt="dumbell-img" />
           </span>
         </div>
       </div>
