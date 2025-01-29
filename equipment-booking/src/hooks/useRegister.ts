@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { authRegister } from "../services/api";
 import { UseRegisterReturn } from "../types/register";
+import { useNavigate } from "react-router";
 
 /**
  * Handles user registration.
@@ -17,6 +18,8 @@ const useRegister = (): UseRegisterReturn => {
   const [confirmPasswordRegister, setConfirmPasswordRegister] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [messageType, setMessageType] = useState<"success" | "error" | "">("");
+
+  const navigate = useNavigate();
 
   /**
    * Clears the message after a delay of 3 seconds.
@@ -71,6 +74,9 @@ const useRegister = (): UseRegisterReturn => {
       const response = await authRegister(userNameRegister, passwordRegister);
       setMessage(`Registrazione riuscita: ${response}, ora puoi effettuare il login`);
       setMessageType("success");
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
     } catch {
       setMessage(`Errore nella registrazione`);
       setMessageType("error");
