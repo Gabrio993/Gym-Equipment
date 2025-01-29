@@ -59,7 +59,7 @@ export default function Home(): JSX.Element {
                 Prezzo: <strong>{item.pricePerMinute} €/min</strong>
               </p>
               <button
-                className="equipment-rent-button bg-slate-300 text-slate-800 hover:bg-slate-400 w-full py-2 rounded-lg mt-4 transition-colors"
+                className="equipment-rent-button bg-slate-300 text-slate-800 hover:bg-slate-100  w-full py-2 rounded-lg mt-4 transition-colors"
                 onClick={() => handleRentClick(item)}
               >
                 Noleggia
