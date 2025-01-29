@@ -7,7 +7,7 @@ export interface UseHomeReturn {
   calculatedPrice: number;
   notification: { message: string; type: "success" | "error" } | null;
   selectedEquipment: Equipment | null;
-  duration: number;
+  duration: number | null;
   handleDurationChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleRentClick: (item: Equipment) => void;
   handleBookingConfirm: () => Promise<void>;

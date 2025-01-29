@@ -85,7 +85,7 @@ export default function Home(): JSX.Element {
                   type="number"
                   min="1"
                   max="20"
-                  value={duration}
+                  value={duration || ""}
                   onChange={handleDurationChange}
                   className="mt-1 p-2 border border-slate-300 rounded-lg w-full"
                 />
@@ -101,9 +101,9 @@ export default function Home(): JSX.Element {
                   Chiudi
                 </button>
                 <button
-                  className="modal-confirm-button bg-blue-500 text-white hover:bg-blue-600 py-2 px-4 rounded-lg transition-colors"
+                  className="modal-confirm-button bg-blue-500 text-white hover:bg-blue-600 disabled:bg-white py-2 px-4 rounded-lg transition-colors"
                   onClick={handleBookingConfirm}
-                  disabled={!duration || duration <= 0}
+                  disabled={!duration || duration <= 0 || duration > 20}
                 >
                   Conferma
                 </button>
