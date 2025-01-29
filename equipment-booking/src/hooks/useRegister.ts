@@ -60,6 +60,15 @@ const useRegister = (): UseRegisterReturn => {
       clearMessageAfterDelay();
       return;
     }
+
+    // Check if password meets criteria
+    const passwordCriteria = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}|[\]\\:";'<>?,./]).{6,}$/;
+    if (!passwordCriteria.test(passwordRegister)) {
+      setMessage("La password deve contenere almeno una maiuscola, un numero e un carattere speciale.");
+      setMessageType("error");
+      clearMessageAfterDelay();
+      return;
+    }
     // check between the two password
     if (confirmPasswordRegister !== passwordRegister) {
       setMessage("Le password sembrano essere diverse!");
