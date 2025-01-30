@@ -5,4 +5,5 @@ export interface UseLoginReturn {
   setPasswordLogin: React.Dispatch<React.SetStateAction<string>>;
   message: string;
   handleLogin: (e: React.FormEvent) => Promise<void>;
+  loading: boolean;
 }

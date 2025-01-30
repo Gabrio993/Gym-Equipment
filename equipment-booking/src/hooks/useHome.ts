@@ -32,6 +32,8 @@ const useHome = (): UseHomeReturn => {
      * If the API does not return a 200 response, it will set an error.
      * In any case, it will remove the loading state at the end.
      */
+    let timeoutID: number;
+
     const getEquipment = async () => {
       try {
         const data = await fetchEquipment();
@@ -40,12 +42,17 @@ const useHome = (): UseHomeReturn => {
         setError("Impossibile caricare le attrezzature!"); // Errors handling
         console.error(err);
       } finally {
-        setTimeout(() => {
+        timeoutID = setTimeout(() => {
           setLoading(false); // Remove loading state after delay to show spinner animation
         }, 1000);
       }
     };
+
     getEquipment();
+
+    return () => {
+      clearTimeout(timeoutID); // Cleanup timeout when component unmounts
+    };
   }, []);
 
   /**

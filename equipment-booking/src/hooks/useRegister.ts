@@ -18,6 +18,7 @@ const useRegister = (): UseRegisterReturn => {
   const [confirmPasswordRegister, setConfirmPasswordRegister] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [messageType, setMessageType] = useState<"success" | "error" | "">("");
+  const [loading, setLoading] = useState(false); // Stato per gestire il caricamento
 
   const navigate = useNavigate();
 
@@ -79,13 +80,12 @@ const useRegister = (): UseRegisterReturn => {
       setConfirmPasswordRegister(passwordRegister);
     }
 
+    setLoading(true);
     try {
       const response = await authRegister(userNameRegister, passwordRegister);
       setMessage(`Registrazione riuscita: ${response}, ora puoi effettuare il login`);
       setMessageType("success");
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+      navigate("/login");
     } catch {
       setMessage(`Errore nella registrazione`);
       setMessageType("error");
@@ -94,6 +94,10 @@ const useRegister = (): UseRegisterReturn => {
       setPasswordRegister("");
       setConfirmPasswordRegister("");
       clearMessageAfterDelay();
+
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
     }
   };
   return {
@@ -106,6 +110,7 @@ const useRegister = (): UseRegisterReturn => {
     setPasswordRegister,
     confirmPasswordRegister,
     setConfirmPasswordRegister,
+    loading,
   };
 };
 

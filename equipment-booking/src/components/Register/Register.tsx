@@ -19,6 +19,7 @@ export default function Register(): JSX.Element {
     messageType,
     confirmPasswordRegister,
     setConfirmPasswordRegister,
+    loading,
   } = useRegister();
 
   return (
@@ -68,8 +69,21 @@ export default function Register(): JSX.Element {
             className="p-2 rounded-md bg-slate-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-slate-500"
           />
 
-          <button type="submit" className="bg-slate-600 hover:bg-slate-500 text-white font-semibold py-2 px-4 rounded-md transition-colors">
-            Registrati
+          <button
+            type="submit"
+            disabled={loading}
+            className={`bg-slate-600 hover:bg-slate-500 text-white font-semibold py-2 px-4 rounded-md transition-colors flex items-center justify-center ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            {loading ? (
+              <svg className="animate-spin h-5 w-5 mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+              </svg>
+            ) : (
+              "Registrati"
+            )}
           </button>
           <p className="text-sm">
             Hai già un account?{" "}

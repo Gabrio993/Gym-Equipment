@@ -17,6 +17,8 @@ const useLogin = (): UseLoginReturn => {
   const [userNameLogin, setUserNameLogin] = useState<string>("");
   const [passwordLogin, setPasswordLogin] = useState<string>("");
   const [message, setMessage] = useState<string>("");
+  const [loading, setLoading] = useState(false); // Stato per gestire il caricamento
+
   const navigate = useNavigate();
 
   /**
@@ -51,6 +53,8 @@ const useLogin = (): UseLoginReturn => {
       clearMessageAfterDelay();
       return;
     }
+
+    setLoading(true);
     try {
       const response: LoginResponse = await authLogin(userNameLogin, passwordLogin);
       setMessage(`Login riuscito!`);
@@ -63,6 +67,9 @@ const useLogin = (): UseLoginReturn => {
       setUserNameLogin("");
       setPasswordLogin("");
       clearMessageAfterDelay();
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
     }
   };
 
@@ -73,6 +80,7 @@ const useLogin = (): UseLoginReturn => {
     setPasswordLogin,
     message,
     handleLogin,
+    loading,
   };
 };
 
